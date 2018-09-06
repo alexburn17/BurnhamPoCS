@@ -40,7 +40,7 @@ $$N^{1/3} \propto V^3$$
 1/9 roughly equates to a slope of 0.111. After importing the current times for the 2000m (http://www.worldrowing.com/events/statistics/) and fitting a linear model as done in the McMahon and Bonner paper, we see a similar trend with a slope of 0.166. This is a slightly steeper slope but based on the coarseness of the data and the limited range of the variables in terms of orders of magnitude, they can be considered to be very similar. This slight increase, if more than a product of the limited data, might be due to technological advancements that allow for the reduction of friction in larger hulled boats. A premise (at least of sailing) is that larger boats go faster all else being equal so technological advancement might have strengthened this relationship.
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 ###################################################################
 # PoCS Assignment 1 code
 # P. Alexander Burnham
@@ -49,7 +49,7 @@ $$N^{1/3} \propto V^3$$
 
 #Preliminaries:
 # Clear memory of characters
-ls()
+
 rm(list=ls())
 
 
@@ -75,10 +75,81 @@ mod <- lm(rowing$MperSec~rowing$Class)
 plot(rowing$Class, rowing$MperSec, xlab="Number of Oarsman", ylab="speed (m/s)", main = "Modern World Records for the 2000m by Class")
 abline(mod, col = "red")
 
-summary(mod) # print model
+mod$coefficients # print model
 
 
 ```
 
 
 **#3)**
+
+a) The scale does seem to match the 2/3 scaling hypothesis. The data were taken from (https://www.iwf.net/results/world-records/) body mass and weight lifted were log base 10 transformed and the slopes of the line of best fit for each regression were close to 0.666 (Clean and Jerk = 0.609, Snatch = 0.601 and Total = 0.597). 
+
+
+
+```{r, echo=FALSE}
+###################################################################
+
+# Read in Data:
+weights <- read.csv("assigment1_weights.csv", 
+                header=TRUE, 
+                sep = ",", 
+                stringsAsFactors = FALSE)
+
+weights$logMass <- log10(weights$BodyMass)
+weights$logWeight <- log10(weights$Weight)
+# split by three classes
+weightssplit <- split(weights, weights$Type)
+
+par(mfrow=c(1,3))
+
+# model for clean and jerk
+mod1 <- lm(weightssplit$cleanJerk$logWeight ~ weightssplit$cleanJerk$logMass)
+
+# plot clean and jerk 
+plot(weightssplit$cleanJerk$logMass, weightssplit$cleanJerk$logWeight, xlab="log(Weight Class (kg))", ylab="log(Weight Lifted (kg))", main = "Record for Clean & Jerk")
+abline(mod1, col = "red")
+
+
+# model for snatch 
+mod2 <- lm(weightssplit$snatch$logWeight ~ weightssplit$snatch$logMass)
+
+# plot Snatch
+plot(weightssplit$snatch$logMass, weightssplit$snatch$logWeight, xlab="log(Weight Class (kg))", ylab="log(Weight Lifted (kg))", main = "Record for Snatch")
+abline(mod2, col = "blue")
+
+
+# model for total
+mod3 <- lm(weightssplit$Total$logWeight ~ weightssplit$Total$logMass)
+
+# plot total
+plot(weightssplit$Total$logMass, weightssplit$Total$logWeight, xlab="log(Weight Class (kg))", ylab="log(Weight Lifted (kg))", main = "Record for Total")
+abline(mod3, col = "green")
+
+par(mfrow=c(1,1))
+
+
+```
+
+Intercepts and Coefficients for Clean and Jerk, Snatch and Total Respectivly 
+```{r, echo=FALSE}
+mod1$coefficients
+mod2$coefficients
+mod3$coefficients
+
+```
+
+
+b) Using the residuals from the Total catagory, in order to determine overall scaled world champion, we see that the lift fomr the champion in the highest weight class still holds (TALAKHADZE Lasha with 477kg). However, the second place scaled champion is in the 3rd lowest weight class (LIAO Hui with 359 kg).
+
+
+```{r, echo=FALSE}
+
+
+# plot residuals to determine who punches above their weight
+plot(weightssplit$Total$logWeight, mod3$residuals, ylab = "Residuals", xlab = "log(Weight Class)", main = "Total World Record Rescaled")
+abline(h=0, col="red")
+
+```
+
+**#4)**
