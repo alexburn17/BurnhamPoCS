@@ -4,7 +4,8 @@ author: "P. Alexander Burnham"
 date: "September 4, 2018"
 output: pdf_document
 ---
-
+PoCS Assignment github repo:
+Worked with: Andrew, Alice and Chris
 
 **#1)**
 
@@ -154,7 +155,99 @@ abline(h=0, col="red")
 
 **#4)**
 
+Find the Dimensions:
+
+$q_1: [l] = L$
+
+$q_2: [m] = M$
+
+$q_3: [g] = LT^{-2}$
+
+$q_4: [\tau] = T$
+
+Set up dimensions to find $\pi_1$
+
+$\pi_1 = (L)^{x_1}(M)^{x_2}(LT^{-2})^{x_3}(T)^{x_4}$
+
+$L: x_1+x_3=0$
+
+$M: x_2=0$
+
+$T: -2x_3+x_4=0$
+
+One dimensionless parameter (4-3=1). Equation is in one space so make assumptions that $x_1=1$.
+
+Solve algerbraicially after substitution:
+
+$L: 1+x_3=0$ thus $x_3=-1$
+
+$M: x_2=0$
+
+$T: -2x_3+x_4=0$ substitute $-1$ in for $x_3$ to get $x_4=-2$
+
+$$x_1=1,   x_2=0,   x_3=-1,   x_4=-2$$
+
+$$\pi_1 = l^1m^0g^{-1}\tau^{-2}$$
+
+$$\pi_1 = l/(g\tau^{2})$$ 
+
+multiply both sides by $g$, divide by $l$ and take the square root of both sides
+
+$$\sqrt{\tau^2} \propto \sqrt{l/g}$$
+
+$$\tau \propto \sqrt{l/g}$$
+
 **#5)**
+
+Find the dimensions:
+
+$q_1: [b] = L^2/(T^3)$
+
+$q_2: [\rho] = M/L^3$
+
+$q_3: [V] = L/T$
+
+$q_4: [l] = L$
+
+$q_5: [\sigma] = M/LT^2$
+
+
+Set up dimensions to find $\pi_1$:
+
+$\pi_1 = (L^2/(T^3))^{x_1}(M/L^3)^{x_2}(L/T)^{x_3}(L)^{x_4}(M/LT^2)^{x_5}$
+
+$L: 2x_1-3x_2+x_3+x_4-x_5=0$
+
+$M: x_2+x_5=0$
+
+$T: -3x_1-x_3-2x_5=0$
+
+Two dimensionless parameters (5-3=2). Equation is in two space so make assumptions that $x_1=1, x_2=1$.
+
+
+Solve for $x_i$ algebraically:
+
+$M: (1)+x_5=0$ thus $x_5=-1$ and substitute into equation for T
+
+$T: -3(1)-x_3-2(-1)=0$ thus $x_3 = 1$ and substitue into equation for L
+
+$L: 2(1)-3(1)+(1)+x_4-(-1)=0$ thus $x_4 = -1$ 
+
+Solutions:
+
+$x_1=1,   x_2=1,   x_3=1,   x_4=-1,   x_5=-1$
+
+Substitute in parameters and exponents:
+
+$$\pi_1 = b^1\rho^1V^1l^{-1}\sigma^{-1}$$
+
+$$\pi_1 = Vb\rho/(l\sigma)$$
+
+multiply both sides by $\sigma/(b\rho)$
+
+$$V/l \propto \sigma/(b\rho)$$
+
+
 
 **#6)**
 Find the Dimensions:
@@ -189,15 +282,15 @@ $T: -2+x_4=0$ thus $x_4 = 2$
 
 plug in $x_2$ into the equation for L in order to get all exponants:
 
-$x_1=1,   x_2=-1,   x_3=-5,   x_4=2$
+$$x_1=1,   x_2=-1,   x_3=-5,   x_4=2$$
 
-$\pi_1 = E^1P^{-1}R^{-5}t^2$
+$$\pi_1 = E^1P^{-1}R^{-5}t^2$$
 
 Multiply to get E to one side then Flip denominators 
 
-$\pi_1 = E^1t^2/(P^1R^5)$ 
+$$\pi_1 = E^1t^2/(P^1R^5)$$
 
-$E = pR^5/t^2$ 
+$$E = pR^5/t^2$$ 
 
 
 **#7)**
@@ -238,11 +331,13 @@ $x_1=1,   x_2=1,   x_3=0,   x_4=2,   x_5=-3$
 
 Substitute in parameters and exponents:
 
-$\pi_1 = G^1M^1m^0\tau^2r^{-3}$
+$$\pi_1 = G^1M^1m^0\tau^2r^{-3}$$
 
-$\pi_1 = GM\tau^2/(r^{-3})$ Change sides and remove constants
+Change sides and remove constants
 
-$r^3 \propto \tau^2$
+$$\pi_1 = GM\tau^2/(r^{-3})$$
+
+$$r^3 \propto \tau^2$$
 
 d)
 
