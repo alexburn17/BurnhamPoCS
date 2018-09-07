@@ -153,3 +153,117 @@ abline(h=0, col="red")
 ```
 
 **#4)**
+
+**#5)**
+
+**#6)**
+Find the Dimensions:
+
+$q_1: [E] = ML^2/(T^2)$
+
+$q_2: [P] = M/L^3$
+
+$q_3: [R] = L$
+
+$q_4: [t] = T$
+
+Set up dimensions to find $\pi_1$
+
+$\pi_1 = (ML^2/(T^2))^{x_1}(M/L^3)^{x_2}(r)^{x_3}(T)^{x_4}$
+
+$L: 2x_1-3x_2+x_3=0$
+
+$M: x_1+x_2=0$
+
+$T: -2x_1+x_4=0$
+
+One dimensionless parameter (4-3=1). Equation is in one space so make assumptions that $x_1=1$.
+
+Solve algerbraicially after substitution:
+
+$L: 2-3x_2+x_3=0$
+
+$M: 1+x_2=0$ thus $x_2 = -1$
+
+$T: -2+x_4=0$ thus $x_4 = 2$
+
+plug in $x_2$ into the equation for L in order to get all exponants:
+
+$x_1=1,   x_2=-1,   x_3=-5,   x_4=2$
+
+$\pi_1 = E^1P^{-1}R^{-5}t^2$
+
+Multiply to get E to one side then Flip denominators 
+
+$\pi_1 = E^1t^2/(P^1R^5)$ 
+
+$E = pR^5/t^2$ 
+
+
+**#7)**
+
+a)
+
+Find the dimensions:
+
+$q_1: [G] = L^3/(MT^2)$
+
+$q_2: [M] = M$
+
+$q_3: [m] = M$
+
+$q_4: [\tau] = T$
+
+$q_5: [r] = L$
+
+b)
+
+Set up dimensions to find $\pi_1$:
+
+$\pi_1 = (L^3/(MT^2))^{x_1}(M)^{x_2}(m)^{x_3}(T)^{x_4}(L)^{x_5}$
+
+$L: 3x_1+x_5=0$
+
+$M: -x_1+x_2+x_3=0$
+
+$T: -2x_1+x_4=0$
+
+Two dimensionless parameters (5-3=2). Equation is in two space so make assumptions that $x_1=1, x_2=1$.
+
+c)
+
+Solve for $x_i$ algebraically to get:
+
+$x_1=1,   x_2=1,   x_3=0,   x_4=2,   x_5=-3$
+
+Substitute in parameters and exponents:
+
+$\pi_1 = G^1M^1m^0\tau^2r^{-3}$
+
+$\pi_1 = GM\tau^2/(r^{-3})$ Change sides and remove constants
+
+$r^3 \propto \tau^2$
+
+d)
+
+Not supprisingly, Kepler's 3rd law holds up well. Plotting the period squared against the radius cubed creates a near perfect regression (R^2^=1 and slope = 0.999). This worked for 8 planets in our solar system as well as one of the thousands of small frozen non-planets. This indicates that Kepler's work in the orbital mechanics of planets generalizes to other things in orbits.
+
+```{r, echo=FALSE}
+# set up data
+planet <- c("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto")
+r <- c(0.387, 0.723, 1, 1.524, 5.203, 9.537, 19.19, 30.07, 39.48)
+tau <- c(0.241, 0.615, 1, 1.881, 11.86, 29.42, 83.75, 163.7, 248.0)
+r3 <- r^3
+tau2 <- tau^2
+
+# plot and model data
+plot(log10(r3), log10(tau2), col="white", ylab = "log(Period (T^2))", xlab = "log(Radius (r^3))", main = "Test of Kepler's 3rd Law")
+mod5 <- lm(log10(tau2)~log10(r3))
+text(x=log10(r3), y= log10(tau2), labels = planet)
+abline(mod5, col="red")
+
+mod5$coefficients
+```
+
+**#8)**
+
