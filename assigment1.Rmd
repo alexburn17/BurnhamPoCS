@@ -4,7 +4,11 @@ author: "P. Alexander Burnham"
 date: "September 4, 2018"
 output: pdf_document
 ---
-PoCS Assignment github repo:
+PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
+
+
+
+
 Worked with: Andrew, Alice and Chris
 
 **#1)**
@@ -361,4 +365,80 @@ mod5$coefficients
 ```
 
 **#8)**
+
+a)
+
+Show equations in matrix notation:
+
+$$\begin{bmatrix} L_1\\ L_2\\ L_3\\    \end{bmatrix} = \begin{bmatrix} {c_1}^{-1}\\ {c_2}^{-1}\\ {c_3}^{-1}\\    \end{bmatrix}  \begin{bmatrix} V^{\gamma_1}\\ V^{\gamma_2}\\ V^{\gamma_3}\\    \end{bmatrix}$$
+
+Substitute:
+
+$$L_1L_2L_3 = (c_1c_2c_3)^{-1}V^{\gamma_1+\gamma_2+\gamma_3}$$
+
+Contstants and exponants are equal to 1 by definition:
+
+$$L_1L_2L_3 = (1)V^{1}$$
+
+$$L_1L_2L_3 = V$$
+
+b)
+
+For an isometric scaling $\gamma_i=1/3$ so all of the 3 dimensions grow at the same rate
+
+c)
+
+$$S = 2(L_1L_2)+ 2(L_2L_3)+ 2(L_1L_3)$$
+
+d)
+
+Assume, as directed, isometric $\gamma_i$ and set constants equal to one to see general relationship. We see that as volume increases, surface area increases at a decaying rate and the surface area to volume ration decreases as a negative exponential function, Making volume a dominate variable in this function.
+
+```{r, echo=FALSE}
+
+Volume <- 1:1000
+
+SurfVol <- function(V=Volume, 
+                    g1 = 1/3, g2 = 1/3, g3 = 1/3,
+                    c1 = 1, c2 = 1, c3 = 1){
+# equations:
+L1 <- c1 * V^g1
+L2 <- c2 * V^g2
+L3 <- c3 * V^g3
+
+S <- 2*(L1*L2) + 2*(L1*L3) + 2*(L3*L3)
+
+mat <- cbind(V, L1, L2, L3, S)
+mat <- data.frame(mat)
+
+return(mat)
+
+}
+
+mat <- SurfVol()
+
+par(mfrow=c(1,2))
+
+plot(mat$V, mat$S, ylab = "S", xlab="V", main = "Surface Area by Volume")
+
+plot(mat$V, mat$S/mat$V, ylab = "S/V", xlab="V", main = "Surface Area to Volume Ratio")
+
+par(mfrow=c(1,1))
+
+```
+
+
+e)
+The fastest set is when $\gamma_3=1$ and the other two are 0 as is permissable by $\gamma_1+\gamma_2+\gamma_3=1$ & $\gamma_1\leq\gamma_2\leq\gamma_3$ and is slowest when the smallest allowable $\gamma_3$ value is inputted, $1/3$. 
+```{r, echo=FALSE}
+par(mfrow=c(1,2))
+
+mat <- SurfVol(g1 = 0, g2 = 0, g3 = 1)
+plot(mat$V, mat$S, ylab = "S", xlab="V", main = "Surface Area by Volume MAX")
+
+mat <- SurfVol(g1 = 1/3, g2 = 1/3, g3 = 1/3)
+plot(mat$V, mat$S, ylab = "S", xlab="V", main = "Surface Area by Volume MIN")
+
+par(mfrow=c(1,1))
+```
 
