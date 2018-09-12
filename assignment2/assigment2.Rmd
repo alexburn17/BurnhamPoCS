@@ -1,0 +1,126 @@
+---
+title: "PoCS Assignment 2"
+author: "P. Alexander Burnham"
+date: "September 11, 2018"
+output: pdf_document
+---
+PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
+
+
+
+
+Worked with: 
+
+**#1)**
+
+a)
+
+b)
+
+```{r, echo=FALSE, message=FALSE}
+###################################################################
+# PoCS Assignment 2 code
+# P. Alexander Burnham
+# Sept 11, 2018
+###################################################################
+
+#Preliminaries:
+# Clear memory of characters
+
+rm(list=ls())
+
+
+# set working Directory:
+setwd("~/Documents/GitHub/BurnhamPoCS/assignment2")
+
+
+c <- 3
+x <- 2
+gamma <- seq(-1, 5, 0.1)
+
+Px <- c*x^-gamma
+
+plot(y=Px, x=gamma)
+
+t <-  data.frame(cbind(gamma, Px))
+
+sum(t[t$gamma>1, ]$Px)
+
+a=6
+b=3
+gamma=.5
+
+a*b^gamma-a^gamma*b
+
+```
+
+**#6**
+```{r, echo=FALSE, message=FALSE}
+
+
+
+
+
+# Read in Data:
+words <- read.table("vocab_cs_mod.txt", 
+                header=TRUE, 
+                sep = " ", 
+                stringsAsFactors = FALSE)
+
+# log transform
+words$logk <- log10(words$X30578667846)
+words$logNk <- log10(words$X1)
+
+
+par(mfrow=c(1,2))
+
+plot(x = words$X30578667846, y = words$X1, ylab = "N(k)", xlab = "k", main = "Raw distribution")
+
+plot(y=words$logNk, x=words$logk,  ylab = "log10(N(k))", xlab = "log10(k)", main = "Distribution in log-log space")
+
+par(mfrow=c(1,1))
+
+
+
+```
+
+
+**#7**
+```{r}
+
+# subset the data removing parts of figure that are below 1.5 (Nk)
+wordsTrim <- words[words$logNk>1.5,]
+
+# linear regression of subsetted data
+mod <- lm(wordsTrim$logNk~wordsTrim$logk)
+
+# plot
+plot(y=wordsTrim$logNk, x=wordsTrim$logk,  ylab = "log10(N(k))", xlab = "log10(k)", main = "Subsetted Dist. in log-log space")
+abline(mod, col = "red", size=3)
+text(x=4, y=4, "gamma = -1.674911")
+
+# summarize model: gamma = -1.674911
+summary(mod)
+
+
+```
+
+**#8**
+```{r}
+
+# Read in Data:
+raw <- read.table("google_vocab_rawwordfreqs.txt", 
+                header=TRUE, 
+                sep = " ", 
+                stringsAsFactors = FALSE)
+
+length(words$X1)
+
+mean(words$X1)
+sd(words$X1)
+
+mean(raw$X95119665584)
+sd(raw$X95119665584)
+
+```
+
