@@ -7,58 +7,169 @@ output: pdf_document
 PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
 
 
+Worked with: Yu, Kewang, Ryan, Sam, Luke and Chris
+
+**Problem 1:**
 
 
-Worked with: 
 
-**#1)**
+**a)**
 
-a)
+Step 1: Set up the problem in terms of probability theory 
+
+$$Pr(X \leq x) = \int_{a}^{x} P(x)dx$$
+
+$$P(x) \propto x^{-\gamma a}$$
+
+$$P(x) =cx^{-\gamma}$$
+
+Step 3: set up the integration 
+
+$$ \int_{a}^{b} P(x)dx=1$$
+
+Step 4: simplify 
+
+$$c\int_{a}^{b} x^{-\gamma}dx=1$$
+
+Step 5: find antiderivative and substitute in a and be into the upper and lower limits
+
+$$c\frac{x^{-\gamma + 1}}{-\gamma+1}|^a_b = 1$$
+
+Step 6:
+
+$$c\frac{b^{-\gamma + 1}}{-\gamma+1}-c\frac{a^{-\gamma + 1}}{-\gamma+1} = 1$$
+
+Step 6: Simplify 
+
+$$c\frac{-\gamma + 1}{b^{1-\gamma}-a^{1-\gamma}} = 1$$
+
+Step 6: solve for C
+
+$$c = \frac{\gamma - 1}{b^{1-\gamma}-a^{1-\gamma}}$$
+
 
 b)
 
+We assume $\gamma > 1$ as $\gamma < 1$ yields an infiniate area under the curve and as this is a probability distribution, it must sum to 1.
+
+**Problem 2:**
+
+Step 1: Integrate p(x) and x^n^ to find the n^th^ moment
+
+$$P(x) = x^ncx^{-\gamma}$$
+
+$$\int_{a}^{b} x^nP(x)dx$$
+
+Step 2:
+
+$$\int_{a}^{b} x^ncx^{-\gamma}dx$$
+
+Step 3: Simplify and integrate
+
+$$c\int_{a}^{b} x^{n-\gamma}dx$$
+
+Step 4: substitute in a and b
+
+$$c\frac{x^{n-\gamma + 1}}{n-\gamma+1}|^b_a $$
+
+Step 5: Simplify 
+
+$$c\frac{b^{n-\gamma + 1}}{n-\gamma+1}-c\frac{a^{n-\gamma + 1}}{n-\gamma+1}$$
+
+Step 5: simplify n^th^ moment and add in expression for $c$
+
+$$c\frac{b^{1-\gamma + n}-a^{1-\gamma + n}}{1-\gamma+n}* \frac{\gamma - 1}{b^{1-\gamma}-a^{1-\gamma}}$$
+
+**Problem 3:**
+
+Step 1: take the limit as b goes to infinity 
+
+$$\lim_{b\to\infty} \frac{b^{1-\gamma + n}-a^{1-\gamma + n}}{1-\gamma+n}* \frac{\gamma - 1}{b^{1-\gamma}-a^{1-\gamma}}$$
+
+Step 2: the b terms go to infinity and are removed
+
+$$\frac{a^{1-\gamma + n}}{1-\gamma+n}* \frac{\gamma - 1}{-a^{1-\gamma}}$$
+
+Step 3: a terms cancel
+
+$$\frac{(\gamma-1)a^n}{\gamma-n-1}$$
+
+This means that when b goes to infinity, $\gamma>n+1$ and $a$ dominates
+
+**Problem 4:**
+
+$$\frac{b^{1-\gamma + n}-a^{1-\gamma + n}}{1-\gamma+n}* \frac{\gamma - 1}{b^{1-\gamma}-a^{1-\gamma}}$$
+
+When $a \ll b$, $b$ dominates and $\gamma \leq n+1$
+
+**Problem 5:**
+
+
+
+
+
+**a)**
+
+Step 1: (E=expectation) 
+
+$$var(x) = E[(x)-(E(x))^2]$$
+
+$$\sigma^2 =  E(x^2)-(E(x))^2$$
+
+Step 2: substitute in the n^th^ moment in for x and substitute in the appropriate exponent for n and simplify
+
+ $$\sigma^2 = \frac{b^{3-\gamma}-a^{3-\gamma}}{3-\gamma}* \frac{1-\gamma}{b^{1-\gamma}-a^{1-\gamma}}- \left(\frac{b^{2-\gamma}-a^{2-\gamma}}{2-\gamma}* \frac{1-\gamma}{b^{1-\gamma}-a^{1-\gamma}}\right)^2$$
+
+Step 3: Take the limit as b approaches infinity 
+
+$$\lim_{b\to\infty} \frac{b^{3-\gamma}-a^{3-\gamma}}{3-\gamma}* \frac{1-\gamma}{b^{1-\gamma}-a^{1-\gamma}}- \left(\frac{b^{2-\gamma}-a^{2-\gamma}}{2-\gamma}* \frac{1-\gamma}{b^{1-\gamma}-a^{1-\gamma}}\right)^2$$
+
+Step 4: b terms are removed and a terms simplify 
+
+ $$\sigma^2 = \frac{-a^{3-\gamma}}{3-\gamma}* \frac{1-\gamma}{-a^{1-\gamma}}- \left(\frac{-a^{2-\gamma}}{2-\gamma}* \frac{1-\gamma}{-a^{1-\gamma}}\right)^2$$
+
+ $$\sigma^2 = a^2\frac{1-\gamma}{3-\gamma} -a^2\frac{(1-\gamma)^2}{(2-\gamma)^2}$$
+
+Step 5: factor a^2^ out and cross multiply
+
+ $$\sigma^2 = a^2 \left(\frac{(1-\gamma)(2-\gamma)^2}{(3-\gamma)(2-\gamma)^2} -\frac{(3-\gamma)(1-\gamma)^2}{(3-\gamma)(2-\gamma)^2}\right)$$
+
+Step 6: square, distribute, subtract and cancel the numerator 
+
+$$(1-\gamma)(4-4\gamma+\gamma^2)-(3-\gamma)(1-2\gamma+\gamma^2)$$
+
+$$4-4\gamma+\gamma^2-4\gamma+4\gamma^2-\gamma^3-(3-6\gamma+3\gamma^2-\gamma+2\gamma^2-\gamma^3)$$
+
+$$numerator = 1-\gamma$$
+
+ $$Yields:\sigma^2=\frac{1-\gamma}{(3-\gamma)(2-\gamma)^2}a^2$$
+
+Step 6: multiply both sides of equation by negative 1 to get in the form described in the instructions:
+
+$$\sigma^2=\frac{\gamma-1}{(\gamma-3)(\gamma-2)^2}a^2$$
+
+* $c_1 = 1$
+* $c_2 = 3$
+* $c_3 = 2$
+
+
+Step 6: Take the square root of both sides to get the standard deviation $\sigma$
+
+$$\sigma=\frac{a\sqrt{(\gamma-1)}}{\sqrt{(\gamma-3)}(\gamma-2)}a^2$$
+
+Constaints: $\gamma > 3$ 
+
+**b)**
+
+$\gamma$ must be greater than 3 and when it is below that, sigma goes to infinity. This will be further elucidated in problem 8. 
+
+
+**Problem 6**
+
+
+
+
 ```{r, echo=FALSE, message=FALSE}
-###################################################################
-# PoCS Assignment 2 code
-# P. Alexander Burnham
-# Sept 11, 2018
-###################################################################
-
-#Preliminaries:
-# Clear memory of characters
-
-rm(list=ls())
-
-
-# set working Directory:
-setwd("~/Documents/GitHub/BurnhamPoCS/assignment2")
-
-
-c <- 3
-x <- 2
-gamma <- seq(-1, 5, 0.1)
-
-Px <- c*x^-gamma
-
-plot(y=Px, x=gamma)
-
-t <-  data.frame(cbind(gamma, Px))
-
-sum(t[t$gamma>1, ]$Px)
-
-a=6
-b=3
-gamma=.5
-
-a*b^gamma-a^gamma*b
-
-```
-
-**#6**
-```{r, echo=FALSE, message=FALSE}
-
-
-
 
 
 # Read in Data:
@@ -85,9 +196,14 @@ par(mfrow=c(1,1))
 ```
 
 
-**#7**
-```{r}
+**Problem 7:**
 
+
+Data trimed to log~10~N~k~ > 1.5 and $\gamma$ was estimated to be 1.675
+
+
+
+```{r, echo=FALSE, message=FALSE}
 # subset the data removing parts of figure that are below 1.5 (Nk)
 wordsTrim <- words[words$logNk>1.5,]
 
@@ -96,31 +212,39 @@ mod <- lm(wordsTrim$logNk~wordsTrim$logk)
 
 # plot
 plot(y=wordsTrim$logNk, x=wordsTrim$logk,  ylab = "log10(N(k))", xlab = "log10(k)", main = "Subsetted Dist. in log-log space")
-abline(mod, col = "red", size=3)
-text(x=4, y=4, "gamma = -1.674911")
+abline(mod, col = "red")
+text(x=4, y=4, "gamma = 1.674911")
 
-# summarize model: gamma = -1.674911
-summary(mod)
-
-
-```
-
-**#8**
-```{r}
-
-# Read in Data:
-raw <- read.table("google_vocab_rawwordfreqs.txt", 
-                header=TRUE, 
-                sep = " ", 
-                stringsAsFactors = FALSE)
-
-length(words$X1)
-
-mean(words$X1)
-sd(words$X1)
-
-mean(raw$X95119665584)
-sd(raw$X95119665584)
+# summarize model: gamma = 1.674911
+mod$coefficients
 
 ```
 
+**Problem 8:**
+
+
+```{r, echo=FALSE, message=FALSE}
+
+# mean of K
+#mean(words$X30578667846)
+
+# standard deviation of K
+#sd(words$X30578667846)
+
+# min of K
+#min(words$X30578667846)
+
+# standard deviation
+#(200*sqrt(1.675-1))/((1.675-2)*sqrt(1.675-3))
+
+# variance
+(200^2*(((1.675-1)/((1.675-3)*(1.675-2)^2))))
+
+```
+
+mean of k = 3235569
+sd of k = 109794501
+a estimate = 200
+gamma estimate = 1.675
+
+plugging these estimates back into the equation from problem 5 for variance we get a negative number (-192921.7) as our estimate of gamma is less than 3 causing sigma to go to infinity. Also, our computed mean is smaller than our computed sd, which further gives evidence that sigma will go to infiinity, meaning that the moment does not exist. This makes sense given the mean, sd and estimated gamma value as well as the negative variance result by plugging these estimates back in.
