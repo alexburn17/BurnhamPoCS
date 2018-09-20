@@ -1,0 +1,134 @@
+---
+title: "PoCS Assignment 3"
+author: "P. Alexander Burnham"
+date: "September 18, 2018"
+output: pdf_document
+---
+PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
+
+
+Worked with: Sam
+
+
+
+**Problem 1:**
+
+```{r, echo=FALSE, message=FALSE}
+
+setwd("~/Documents/GitHub/BurnhamPoCS/assignment3")
+
+# Read in Data:
+words <- read.table("vocab_cs_mod.txt", 
+                header=TRUE, 
+                sep = " ", 
+                stringsAsFactors = FALSE)
+
+
+# Read in Data:
+wordsFreq <- read.table("google_vocab_rawwordfreqs.txt", 
+                header=TRUE, 
+                sep = " ", 
+                stringsAsFactors = FALSE)
+
+
+
+
+myecdfOn <- function(x=words$X1) {1 - ecdf(x)(x)}
+
+logN_k <- log10(myecdfOn(words$X30578667846))
+logk <- log10(words$X30578667846)
+
+df <- data.frame(logN_k, logk)
+
+plot(y=df$logN_k, x=df$logk, ylab="log10(N_>k)", xlab="log10(k)", main="ccdf in log-log space")
+
+```
+
+
+**Problem 2:**
+```{r, echo=FALSE, message=FALSE}
+
+# trim data set to show two scaling 
+dfTrim <- df[df$logk>5 & df$logk<9,]
+
+dfTrimOne <- dfTrim[dfTrim$logk<7, ] 
+dfTrimTwo <- dfTrim[dfTrim$logk>7, ] 
+
+# linear regression of subsetted data
+mod1 <- lm(dfTrimOne$logN_k~dfTrimOne$logk)
+mod2 <- lm(dfTrimTwo$logN_k~dfTrimTwo$logk)
+
+plot(y=dfTrim$logN_k, x=dfTrim$logk, ylab="log10(N_>k)", xlab="log10(k)", main = "Trimmed CCDF - Two Scaling Regimes")
+abline(mod1, col = "red", lwd=3, lty="dashed")
+abline(mod2, col = "blue", lwd=3, lty="dashed")
+abline(v = 7, lwd=2, lty="dotted")
+
+mod1$coefficients
+confint(mod1, 'dfTrimOne$logk', level=0.95)
+
+mod2$coefficients
+confint(mod2, 'dfTrimTwo$logk', level=0.95)
+
+```
+
+**Problem 3:**
+
+```{r, echo=FALSE, message=FALSE}
+
+x <- wordsFreq$X95119665584
+
+n = 100000
+
+random <- runif(n, 1, length(wordsFreq$X95119665584))
+
+plot(y=log10(sort((wordsFreq$X95119665584[random]), decreasing = TRUE)),  x=(1:n), xlab = "Rank", ylab="log10(Word Frequency)", main = "Word Frequency by Rank")
+text(x=80000, y=8, paste("n =", n, "words"))
+
+
+
+
+
+
+```
+
+**Problem 4:**
+
+
+
+```{r, echo=FALSE, message=FALSE}
+
+
+ytrim <- log10(sort((wordsFreq$X95119665584[random]), decreasing = TRUE))
+xtrim <- log10(1:n)
+dfFour <- data.frame(xtrim, ytrim)
+
+dfTrim2 <- dfFour[dfFour$xtrim>1.5,]
+
+Lower <- dfTrim2[dfTrim2$xtrim>3.25, ] 
+Upper <- dfTrim2[dfTrim2$xtrim<3.25, ] 
+
+# linear regression of subsetted data
+mod3 <- lm(Upper$ytrim~Upper$xtrim)
+mod4 <- lm(Lower$ytrim~Lower$xtrim)
+
+plot(y=dfTrim2$ytrim,  x=dfTrim2$xtrim, xlab = "log10(Rank)", ylab="log10(Word Frequency)", main = "Word Frequency by Rank Trimmed (log-log)")
+
+abline(mod3, col = "red", lwd=3, lty="dashed")
+abline(mod4, col = "blue", lwd=3, lty="dashed")
+
+abline(v = 3.25, lwd=2, lty="dotted")
+
+mod3$coefficients
+confint(mod3, 'Upper$xtrim', level=0.95)
+mod4$coefficients
+confint(mod4, 'Lower$xtrim', level=0.95)
+```
+
+**Problem 5:**
+$$\alpha = \frac{1}{1-\gamma}$$
+
+
+
+
+
+

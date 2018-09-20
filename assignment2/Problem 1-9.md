@@ -146,4 +146,70 @@ $$\sigma=\frac{a\sqrt{(\gamma-1)}}{\sqrt{(\gamma-3)}(\gamma-2)}a^2$$
 
 $$var(x) = \E[(x)-(\E(x))^2]$$
 
-$$\sigma^2 =  \E(x^2)-(\E(x))^2$$
+$$\sigma^2 = \E(x^2)-(\E(x))^2$$
+
+
+
+
+
+
+
+**Problem 9**
+
+**a)**
+
+This probability can be written as...
+
+$\frac{P(2 \;  girls \; at \;  least \; 1  \;  born  \; on  \; Tuesday)}{P(2 \;  girls \; at \;  least \; 1  \;  born  \; on  \; Tuesday )+ 2(P(at \; least \; 1  \; girl  \; born  \; on  \; Tuesday))}$
+
+
+
+Grid can be set up that is 7x7 with a total of 49 cells with T denoting instances were a girl is born on Tuesday.
+
+
+
+$\frac{(g)\begin{matrix} & & &(g)  \\- & T & - & - & - & - & - \\ T & T & T & T & T & T & T \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ \end{matrix}}{(g)\begin{matrix} & & &(g)  \\- & T & - & - & - & - & - \\ T & T & T & T & T & T & T \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ \end{matrix} \; + \; (g)\begin{matrix} & & &(b)  \\- & - & - & - & - & - & - \\ T & T & T & T & T & T & T \\ - & - & - & - & - & - & - \\ - & - & - & - & - & - & - \\ - & - & - & - & - & - & - \\ - & - & - & - & - & - & - \\ - & - & - & - & - & - & - \\ \end{matrix}  \; + \; (b)\begin{matrix} & & &(g)  \\- & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ - & T & - & - & - & - & - \\ \end{matrix}}$
+
+
+
+This simplifies to...
+
+$$=\frac{\frac{13}{49}}{\frac{13}{49}+\frac{7}{49}+\frac{7}{49}}=\frac{13}{27}=0.4814815$$
+
+
+
+This question has a great deal to do with the language or wording of the question itself. The intuitive answer is $1/2$. There is one girl already. Another child has a 50% chance of being another girl. However, the addition of Tuesday alters the probability.
+
+The question states, "A parent has two children, not twins, and one is a girl born on a Tuesday. What’s the probability that both children are girls?" 
+
+If we were stating, "A parent has two children, one of which is a girl. What is the probability the other is a girl?"" The answer would be $1/3$. 
+
+$$P(gg)=\frac{gg}{gg+gb+bg}$$
+
+Boy-boy does not enter into the calculation as we already know at least one child is a girl. Instinctively, the addition of the day should not matter. If the question asked something like, "what is the probability of having a girl born on Tuesday and a girl born on any other day of the week?" It would make sense that the day of the week matters. However, the question is rather more subtle in its wording and distinctly ignores order. If order were included, the answer would be $1/2$. The addition of information alters the probability space. Now a conditional probability with day of the week as a factor exists. The more information given, the closer to $1/2$ we get as shown in part b.
+
+
+
+**b)**
+
+
+
+This probability can be written as...
+
+$\frac{P(2 \;  girls \; at \;  least \; 1  \;  born  \; Dec. \; 31)}{P(2 \;  girls \; at \;  least \; 1  \;  born  \; on  \; Dec. \; 31)+ 2(P(at \; least \; 1  \; girl  \; born  \; on  \; Dec. \; 31))}$
+
+
+
+Grid can be set up that is 365x365 with a total of 133225 cells with D31 denoting instances were a girl is born on December 31. Assume no leap year.
+
+$\frac{(g)\begin{matrix} & & &(g)  \\ & 1 & 2 & 3 & .. & 365  \\ 1 & - & - & - & - &  D31 & \\ 2 & - & - & - & - &  D31  \\ 3& - & - & - & - &  D31 \\ : & - & - & - & - & :\\ 365 & D31 & D31 & D31 & .. & D31 \end{matrix}}{(g)\begin{matrix} & & &(g)  \\ & 1 & 2 & 3 & .. & 365  \\ 1 & - & - & - & - &  D31 & \\ 2 & - & - & - & - &  D31  \\ 3& - & - & - & - &  D31 \\ : & - & - & - & - & :\\ 365 & D31 & D31 & D31 & .. & D31 \end{matrix} \; + \; (b)\begin{matrix} & & &(g)  \\ & 1 & 2 & 3 & .. & 365  \\ 1 & - & - & - & - &  D31 & \\ 2 & - & - & - & - &  D31  \\ 3& - & - & - & - &  D31 \\ : & - & - & - & - & :\\ 365 & - & - & - & - & D31 \end{matrix}   \; + \; (g)\begin{matrix} & & &(b)  \\ & 1 & 2 & 3 & .. & 365  \\ 1 & - & - & - & - &  - & \\ 2 & - & - & - & - &  -  \\ 3& - & - & - & - &  - \\ : & - & - & - & - & -\\ 365 & D31 & D31 & D31 & .. & D31 \end{matrix}}$
+
+
+
+This simplifies to...
+
+$$=\frac{\frac{729}{133225}}{\frac{729}{133225}+\frac{365}{133225}+\frac{365}{133225}}=\frac{729}{1459}=0.4996573$$
+
+
+
+This has an even higher probability and is very close to 1/2. The reason for this asymptotic approach to 1/2 is due to the ratio of overlapping scenarios in the girl-girl case, which is always $1/(2*length\;of\;n)$. This ratio decreases as n increases. For 1 day of a week, n=14 and the overlap proportion is $1/14$. For a single day of the year, it is much smaller, $1/730$. This discrepancy drives the overall promotion towards $1/2$ as n increases. 
