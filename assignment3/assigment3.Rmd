@@ -7,7 +7,7 @@ output: pdf_document
 PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
 
 
-Worked with: Sam
+Worked with: Sam and Edison
 
 
 
@@ -49,10 +49,13 @@ plot(y=df$logN_k, x=df$logk, ylab="log10(N_>k)", xlab="log10(k)", main="ccdf in 
 ```{r, echo=FALSE, message=FALSE}
 
 # trim data set to show two scaling 
-dfTrim <- df[df$logk>5 & df$logk<9,]
+dfTrim <- df[df$logk>5 & df$logk<10,] 
 
-dfTrimOne <- dfTrim[dfTrim$logk<7, ] 
-dfTrimTwo <- dfTrim[dfTrim$logk>7, ] 
+dfTrimOne <- dfTrim[dfTrim$logk<7.4, ] 
+dfTrimTwo <- dfTrim[dfTrim$logk>7.4, ] 
+
+dfTrimTwo <- dfTrimTwo[-1,]
+
 
 # linear regression of subsetted data
 mod1 <- lm(dfTrimOne$logN_k~dfTrimOne$logk)
@@ -61,7 +64,7 @@ mod2 <- lm(dfTrimTwo$logN_k~dfTrimTwo$logk)
 plot(y=dfTrim$logN_k, x=dfTrim$logk, ylab="log10(N_>k)", xlab="log10(k)", main = "Trimmed CCDF - Two Scaling Regimes")
 abline(mod1, col = "red", lwd=3, lty="dashed")
 abline(mod2, col = "blue", lwd=3, lty="dashed")
-abline(v = 7, lwd=2, lty="dotted")
+abline(v = 7.4, lwd=2, lty="dotted")
 
 mod1$coefficients
 confint(mod1, 'dfTrimOne$logk', level=0.95)
@@ -127,7 +130,36 @@ confint(mod4, 'Lower$xtrim', level=0.95)
 **Problem 5:**
 $$\alpha = \frac{1}{1-\gamma}$$
 
+Gamma Upper: -0.6423224 
+Gamma Lower: -1.099329 
+Alpha Upper: -1.527044 
+Alpha Lower: -1.405086 
 
+
+```{r, echo=FALSE, message=FALSE}
+
+gamma1 <- 1.6423224 
+gamma2 <- 2.099329 
+alpha1 <- 1.527044 
+alpha2 <- 1.406359 
+
+alpha1est <- 1/(1-gamma1)
+
+alpha1est
+alpha1est/alpha1
+
+
+alpha2est <- 1/(1-gamma2)
+alpha2est
+
+
+alpha2est/alpha2
+
+
+
+
+```
+95% CIs [2.47, 2.99], [-5.1, 1.56]
 
 
 

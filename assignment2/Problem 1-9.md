@@ -98,7 +98,7 @@ When $a \ll b$, $b$ dominates and $\gamma \leq n+1$
 
 Step 1: 
 
-$$var(x) = \E[(x)-(\E(x))^2] $$
+$$var(x) = \E[(x)-(\E(x))^2] ​$$
 
 $$\sigma^2 =  \E(x^2)-(\E(x))^2$$
 
