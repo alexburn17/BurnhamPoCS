@@ -36,11 +36,29 @@ Alpha values after taking absolute value with 95% CI
 
 **Problem 5:**
 
+Measurements for $\gamma$ and $\alpha$ for 2 scaling regimes from empirical data
+
 - $\gamma_{red}$ = 1.6423224, 95% CI [1.6421033 1.6425415]
 - $\gamma_{blue}$ = 2.099329, 95% CI [2.09735, 2.101307]
 
 * $\alpha_{red}$ = 1.593627, 95% CI [1.591714, 1.59554]
 * $\alpha_{blue}$ = 1.391344, 95% CI [1.391236, 1.391452]
+
+$$\alpha_{expected} = \frac{1}{1-\gamma_{red}}$$
+
+$$\alpha_{expected} = 1.556851$$
+
+Very close to $\gamma_{red}$ of 1.64
+
+$$\alpha_{expected} = \frac{1}{1-\gamma_{blue}}$$
+
+$\alpha_{expected}=$  0.9096458
+
+Far from $\alpha_{blue}$ of 1.39
+
+
+
+This seems to indicate that the scaling regime in the red region holds true to Zipf's Law however, the second half of the regime (blue region) varied from this relationship. This could be due to sampling only 100,000 observations from a data set of 14 million and from eye-balling regions of different scalings. 
 
 **Problem 6:**
 
@@ -174,5 +192,51 @@ $$\Big( \genfrac{}{}{0pt}{}{t}{\frac{t+j-i}{2}} \Big) = number \; of \; random\;
 
 1)
 
+$$N_{fr}=N(1,1,2n-2)-N(-1,1,2n-2)$$
 
+2) plug into $\Big( \genfrac{}{}{0pt}{}{t}{\frac{t+j-i}{2}} \Big)$, i=first number in parens, j=second and t=third
+
+$$=\frac{(2n-2)}{\frac{2n-2+1-1}{2}}-\frac{(2n-2)}{\frac{2n-2+1+1}{2}}$$
+
+$$=\Big( \genfrac{}{}{0pt}{}{2n-2}{n-1} \Big)-\Big( \genfrac{}{}{0pt}{}{2n-2}{n} \Big)$$
+
+3) this equals...
+
+$$=\frac{(2n-2)!}{(n-1)!(n-1)!}-\frac{(2n-2)!}{n!n!}$$
+
+4) simplify...
+
+$$=\frac{(2n-2)!n!n!}{(n-1)!(n-1)!n!n!}-\frac{(2n-2)!(n-1)!(n-1)!}{(n-1)!(n-1)!n!n!}$$
+
+$$=\frac{(2n-2)!n!n!-(2n-2)!(n-1)!(n-1)!}{(n-1)!(n-1)!n!n!}$$
+
+$$=\frac{(2n-2)!}{(n-1)!n!}$$
+
+5) apply sterling's approximation:
+
+$$=\frac{\sqrt{2\pi (2n-2)}(\frac{2n-2}{e})^{2n-2}}{\sqrt{2\pi (n)}(\frac{n}{e})^{n}\sqrt{2\pi (n-1)}(\frac{n-1}{e})^{n-1}}$$
+
+6) simplify (cancel $\sqrt{2\pi}$ and $(n-1)^{1/2}$ and e terms)
+
+$$=\frac{\sqrt{2\pi}2^{1/2}(n-1)^{1/2}(2n-1)^{(2n-1)}e^{-2n}}{\sqrt{2\pi}n^{1/2}n^ne^{-n}\sqrt{2\pi}(n-1)^{1/2}(n-1)^{(n-1)}e^{-(n-1)}}$$
+
+$$=\frac{2^{1/2}(2n-1)^{(2n-1)}e}{\sqrt{2\pi}n^{1/2}n^n(n-1)^{(n-1)}}$$
+
+7) cancel $(n-1)^{(n-1)}$ and combine terms
+
+$$=\frac{2^{1/2}2^2n^{(n-1)}(n-1)^{(n-1)}(n-1)^2e}{\sqrt{2\pi}n^{1/2}n^n(n-1)^{(n-1)}}$$
+
+$$=\frac{2^{1/2+2}n^{(n-1)}(n-1)^2e}{\sqrt{2\pi}n^{1/2+n}}$$
+
+8) simplify to...
+
+$$=\frac{2^{2n-1}e}{\sqrt{2\pi}}(1-1/2)^n$$
+
+9) as n gets large $(n-1/2)^n$ goes to 1 and we can cancel constants and set proportional
+
+$$=\frac{2^{2n-1}e}{\sqrt{2\pi}}(n-1/2)^n$$
+
+$$=\frac{(2n-2)!}{(n-1)!n!}\propto\frac{2^{2n-1}}{\sqrt{2}}(1)$$
+
+As n goes to infinity, the numerator of the leading term becomes very large and the denominator becomes very small.
 

@@ -140,8 +140,8 @@ Alpha Lower: -1.405086
 
 gamma1 <- 1.6423224 
 gamma2 <- 2.099329 
-alpha1 <- 1.527044 
-alpha2 <- 1.406359 
+alpha1 <- 1.593627
+alpha2 <- 1.391344
 
 alpha1est <- 1/(1-gamma1)
 

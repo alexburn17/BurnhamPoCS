@@ -1,0 +1,141 @@
+---
+title: "PoCS Assignment 4"
+author: "P. Alexander Burnham"
+date: "September 25, 2018"
+output: pdf_document
+---
+PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
+
+
+Worked with: 
+
+
+
+**Problem 1:**
+
+```{r, echo=FALSE, message=FALSE}
+
+# START FUNCTION ###########################################################################
+
+SimonMod <- function(p=0.01, bag=bagVec, runTime=100){
+
+vec <- bag[runif(n=1, 1, length(bag))]
+  
+for(i in 1:runTime){
+
+  pact <- runif(1)
+  
+  if(pact<=p){ 
+    vec[i] <- bag[runif(n=1, 1, length(bag))]}
+  
+  if(pact>p){ 
+    vec[i] <- vec[runif(n=1, 1, length(vec))]}
+}
+  return(vec)
+}
+
+# END FUNCTION #############################################################################
+
+
+
+par(mfrow=c(1,3))
+
+bagVec <- c(0:1000000)
+
+# p=0.1
+SimonVec.1 <- SimonMod(p=0.1, bag=bagVec, runTime=1000000)
+
+x <- as.data.frame(table(SimonVec.1))
+x$Freq<- log10(x$Freq)
+x <- x[order(x$Freq, decreasing = T),] 
+
+mod <- lm(x$Freq~log10(1:length(x$Freq)))
+
+plot(y=x$Freq, x=log10(1:length(x$Freq)), main="Simon Zipf plot (p=0.1)", 
+     ylab="log10(Frequency)", xlab = "log10(Rank)")
+abline(mod, col="green")
+text(x=1,y=4, paste("slope=",round(mod$coefficients[2], 3)))
+
+
+# p=0.01
+SimonVec.01 <- SimonMod(p=0.01, bag=bagVec, runTime=1000000)
+
+x1 <- as.data.frame(table(SimonVec.01))
+x1$Freq<- log10(x1$Freq)
+x1 <- x1[order(x1$Freq, decreasing = T),] 
+
+mod1 <- lm(x1$Freq~log10(1:length(x1$Freq)))
+
+plot(y=x1$Freq, x=log10(1:length(x1$Freq)), main="Simon Zipf plot (p=0.01)", 
+     ylab="log10(Frequency)", xlab = "log10(Rank)")
+abline(mod1, col="red")
+text(x=1,y=4, paste("slope=",round(mod1$coefficients[2], 3)))
+
+# p=0.001
+SimonVec.001 <- SimonMod(p=0.001, bag=bagVec, runTime=10000000)
+
+x2 <- as.data.frame(table(SimonVec.001))
+x2$Freq<- log10(x2$Freq)
+x2 <- x2[order(x2$Freq, decreasing = T),] 
+
+mod2 <- lm(x2$Freq~log10(1:length(x2$Freq)))
+
+plot(y=x2$Freq, x=log10(1:length(x2$Freq)), main="Simon Zipf plot (p=0.001)", 
+     ylab="log10(Frequency)", xlab = "log10(Rank)")
+abline(mod2, col="blue")
+text(x=1,y=4, paste("slope=",round(mod2$coefficients[2], 3)))
+
+par(mfrow=c(1,1))
+
+
+
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE}
+
+
+setwd("~/Documents/GitHub/BurnhamPoCS")
+
+# Read in Data:
+book <- read.csv("book.csv", 
+                header=TRUE, 
+                stringsAsFactors = FALSE)
+x3 <- log10(book$X41)
+
+x3 <- x3[order(x3, decreasing = T)]
+
+mod3 <- lm(x3~log10(1:length(x3)))
+
+plot(x3, x=log10(1:length(x3)), main = "Zipf Plot of Ulysses", ylab="log10(Frequency)", xlab="log10(Rank)")
+
+abline(mod3, col="red")
+text(x=3, y=3.5, paste("The slope is -1.012"))
+
+
+```
+
+
+Trim to find more accurate scaling:
+```{r, echo=FALSE, message=FALSE}
+
+
+setwd("~/Documents/GitHub/BurnhamPoCS")
+
+
+x4 <- x3[x3<2.9 & x3 > 1]
+
+mod4 <- lm(x4~log10(1:length(x4)))
+
+plot(x4, x=log10(1:length(x4)), main = "Zipf Plot of Ulysses", ylab="log10(Frequency)", xlab="log10(Rank)", xlim=c(1.5,3.5))
+
+abline(mod4, col="red")
+text(x=3, y=2.5, paste("The slope is .8715"))
+
+#alpha = 1 - p
+
+0.8715 = 1 - p
+```
+
