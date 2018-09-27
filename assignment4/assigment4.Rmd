@@ -93,7 +93,11 @@ par(mfrow=c(1,1))
 
 
 
+**Problem 3:**
 
+**Problem 4:**
+**a)**
+**b)**
 ```{r, echo=FALSE, message=FALSE}
 
 
@@ -116,13 +120,12 @@ text(x=3, y=3.5, paste("The slope is -1.012"))
 
 
 ```
-
+**c)**
 
 Trim to find more accurate scaling:
 ```{r, echo=FALSE, message=FALSE}
 
 
-setwd("~/Documents/GitHub/BurnhamPoCS")
 
 
 x4 <- x3[x3<2.9 & x3 > 1]
@@ -132,10 +135,67 @@ mod4 <- lm(x4~log10(1:length(x4)))
 plot(x4, x=log10(1:length(x4)), main = "Zipf Plot of Ulysses", ylab="log10(Frequency)", xlab="log10(Rank)", xlim=c(1.5,3.5))
 
 abline(mod4, col="red")
-text(x=3, y=2.5, paste("The slope is .8715"))
+text(x=3, y=2.5, paste("a = 0.8715"))
+text(x=3, y=2.1, paste("p = 0.1285"))
 
 #alpha = 1 - p
 
-0.8715 = 1 - p
+#0.8715 = 1 - p
 ```
 
+**Problem 6:**
+
+**a)**
+```{r, echo=FALSE, message=FALSE}
+
+library("poweRlaw")
+
+N=c(1, 10^2, 10^3, 10^4, 10^5, 10^6) 
+k=(1:1000)
+
+
+#mat <- matrix(nrow = 1000, ncol = 6)
+
+#for(n in 1:6){
+#  for(i in 1:1000){
+#    mat[i, n] <- max(rpldis(n=N[n], xmin=1, alpha=5/2, discrete_max = 1000))
+#}
+#}
+
+
+#matDat <- as.data.frame(mat)
+#CD.sorted <- apply(matDat, 2, sort, decreasing=T)
+
+setwd("~/Documents/GitHub/BurnhamPoCS")
+
+# Read in Data:
+mat <- read.csv("NKsorted.csv", 
+                header=TRUE, 
+                stringsAsFactors = FALSE)
+
+mat2 <- as.matrix(mat)
+
+matplot(log10(mat2), type="o", cex=.2, main="K_max by N", xlab = "Rank", ylab="log10(k_max)", col=c(1:6))
+legend("topright", inset=0.01, legend=c("10^1","10^2","10^3","10^4","10^5","10^6"), col=c(1:6), pch=15)
+
+```
+
+**b)**
+
+```{r, echo=FALSE, message=FALSE}
+par(mfrow=c(1,2))
+
+kmeanEst <- colMeans(mat2)
+mod5 <- lm(log10(kmeanEst)~log10(N)) 
+plot(y=log10(kmeanEst), x=log10(N), main="K_max estimate by N", xlab = "log10(mean(k_max))", ylab = "log10(N)")
+abline(mod5, col="blue")
+text(x=2,y=4, "slope = 0.6262")
+
+gamma <- 5/2
+kmeanTher <- ((gamma-1)/(gamma-2))*N^((2-gamma)/(gamma-1))
+mod6 <- lm(log10(kmeanTher)~log10(N)) 
+plot(y=log10(kmeanTher), x=log10(N), main="K_max theoretical by N", xlab = "log10((k_max))", ylab = "log10(N)")
+abline(mod6, col="red")
+text(x=3,y=.3, "slope = -0.3333")
+par(mfrow=c(1,1))
+```
