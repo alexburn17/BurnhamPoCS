@@ -90,7 +90,7 @@ par(mfrow=c(1,1))
 
 
 ```
-
+The slopes would be closer to the expexted values of 0.9, 0.99 and 0.999 if they were repeated more times and the distributions were trimmed before the regressions were conducted, however, they are very close and we see an increase in the value as $\rho$ decreases.
 
 
 **Problem 2:**
@@ -192,6 +192,26 @@ As $\rho$ approaches $1$, $\gamma$ goes to $\infty$.
 
 **a)**
 
+Given:
+
+$n_1^{(g)} = \frac{N_1t}{\rho t} = \frac{1}{2-\rho}$ & $\frac{n_k}{n_{k+1}}=\frac{(k-1)(1-\rho)}{1+(1-\rho)k}$ 
+
+Step 1: Set up to find $n_1^{(g)}$ and plug in $k=2$ and multiply by $n_1^{(g)}$
+
+$$\frac{n_2^{(g)}}{n_1^{(g)}}=\frac{\frac{N_2}{\rho}}{\frac{N_1}{\rho}}=\frac{N_2}{N_1}=\frac{(2-1)(1-\rho)}{1+(1-\rho)2}*n_1^{(g)}$$ 
+
+$$n_2^{(g)}=\frac{(2-1)(1-\rho)}{1+(1-\rho)2}* \frac{1}{2-\rho}$$
+
+$$n_2^{(g)}=\frac{(1-\rho)}{3-2\rho}* \frac{1}{2-\rho}$$
+
+
+
+Step 2: find $n_3^{(g)}$ in the same way
+
+$$\frac{n_3^{(g)}}{n_2^{(g)}}=\frac{\frac{N_3}{\rho}}{\frac{N_2}{\rho}}=\frac{N_3}{N_2}=\frac{(3-1)(1-\rho)}{1+(1-\rho)3}*n_2^{(g)}$$ 
+
+$$n_3^{(g)}=\frac{2-2\rho}{4-3\rho}*\frac{(1-\rho)}{3-2\rho}* \frac{1}{2-\rho}$$
+
 
 
 **b)**
@@ -238,9 +258,39 @@ par(mfrow=c(1,1))
 ```
 
 
+The estimate of $\rho$ was 0.1285 based on a trimmed distribution to increase accuracy.
+
+Plugging this value in for $n_1^{(g)}, n_2^{(g)}, n_3^{(g)}$ gives the theoretical estimates. The actual values are found by taking the number of groups with frequencies of 1, 2 and 3 in turn over the total number of groups. This gives the following values:
+
+Actual (measured from data set):
+
+- $n_1^{(g)} = 0.565$
+- $n_2^{(g)} = 0.156$
+- $n_2^{(g)} = 0.071$
+
+Theoretical (using estimate for $\rho$:
+
+- $n_1^{(g)} = 0.534$
+
+- $n_2^{(g)} = 0.1697$
+
+- $n_2^{(g)} = 0.082$
+
+These values are all very simaler meaning that our estimate matches our theoretical values well.
 
 **c)**
 
+```{r, echo=FALSE, message=FALSE}
+one <- book[book$X41==1,]
+#length(one$X0)/length(book$X0)
+
+two <- book[book$X41==2,]
+#length(two$X0)/length(book$X0)
+
+
+three <- book[book$X41==3,]
+#length(three$X0)/length(book$X0)
+```
 
 
 
@@ -387,17 +437,19 @@ par(mfrow=c(1,2))
 
 kmeanEst <- colMeans(mat2)
 mod5 <- lm(log10(kmeanEst)~log10(N)) 
-plot(y=log10(kmeanEst), x=log10(N), main="K_max estimate by N", xlab = "log10(mean(k_max))", ylab = "log10(N)")
+plot(y=log10(kmeanEst), x=log10(N), main="K_max estimate by N", xlab = "log10(N)", ylab = "log10((k_max))")
 abline(mod5, col="blue")
 text(x=2,y=4, "slope = 0.6262")
 
 gamma <- 5/2
+
 kmeanTher <- ((gamma-1)/(gamma-2))*N^((2-gamma)/(gamma-1))
+
 mod6 <- lm(log10(kmeanTher)~log10(N)) 
-plot(y=log10(kmeanTher), x=log10(N), main="K_max theoretical by N", xlab = "log10((k_max))", ylab = "log10(N)")
+plot(y=log10(kmeanTher), x=log10(N), main="K_max theoretical by N", xlab = "log10(N)", ylab = "log10((k_max))")
 abline(mod6, col="red")
 text(x=3,y=.3, "slope = -0.3333")
 par(mfrow=c(1,1))
 ```
 
-My theoretical value and empirical values do no match up. The one I calculated by sampling a powerlaw distribution has a positive slope of around 0.6. This makes sense as the max k should increase as the sample size increases. However, my derivation of the theoretical max k has a negative slope of -0.3.
+My theoretical value and empirical values do no match up. The one I calculated by sampling a powerlaw distribution has a positive slope of around 0.6. This makes sense as the max k should increase as the sample size increases. However, my derivation of the theoretical max k has a negative slope of -0.3. This does no make sense and leads me to believe that my model is correct and the theoretical values are incorrect. $K_max$ should increase as N increases as this increase in N gives higher probability of capturing a large $K$. The theretical value looks like it is flipped about the y axis as the spacing of the points is simaler.
