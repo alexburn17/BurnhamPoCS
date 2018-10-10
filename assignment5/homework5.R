@@ -7,7 +7,7 @@ N <- 1000
 
 
 # sequnce of alpha
-alpha <- seq(1,2,length.out=100)
+alpha <- seq(1,2,length.out=1000)
 fa <- matrix(nrow=N, ncol=length(alpha))
 
 # function of a
@@ -21,24 +21,18 @@ for(a in 1:length(alpha)){
 
 y <- colSums(fa)-1
 
-plot(x=alpha, y=y)
+plot(x=alpha, y=y,  ylab = "function(alpha)", xlab="alpha", main = "alpha by function of alpha to determine alpha")
 abline(h=0, col = "red")
-text(x=1.8, y=5, "alpha = 1.727273")
+text(x=1.8, y=5, "alpha = 1.723724")
 
 df <- data.frame(alpha, y)
-df[df$y==-0.006532776,]
+df[df$y==-0.0002918261,]
 
-y=-0.006532776
+
 
 
 
 setwd("~/Documents/GitHub/BurnhamPoCS/assignment3")
-
-# Read in Data:
-words <- read.table("vocab_cs_mod.txt", 
-                    header=TRUE, 
-                    sep = " ", 
-                    stringsAsFactors = FALSE)
 
 
 # Read in Data:

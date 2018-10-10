@@ -1,0 +1,329 @@
+---
+title: "PoCS Assignment 5"
+author: "P. Alexander Burnham"
+date: "October 2, 2018"
+output: pdf_document
+---
+PoCS Assignment github repo: https://github.com/alexburn17/BurnhamPoCS
+
+
+Worked with: Yu Han, Edison & Kewang
+
+
+**Problem 1:**
+
+**a)**
+
+Step 1: sub in $1/D$:
+
+$$S=\sum_{i=1}^{n}p^2_i$$
+
+$$\sum_{i=1}^{n}p^2_i = \sum_{i=1}^{D}(\frac{1}{D})^2_i$$
+
+Step 2: Do summation and simplify:
+
+$$S=D(\frac{1}{D})^2$$
+
+$$S=\frac{1}{D}$$
+
+$$D=\frac{1}{S}$$
+
+Step 3: Sub in $S$:
+
+$$D=\frac{1}{\sum_{i=1}^{n}p^2_i}$$
+
+**b)**
+
+Step 1: sub in  from part a $(S=1/D)$
+
+$$G\equiv 1-S = 1-\sum_{i=1}^{n}p^2_i$$
+
+$$G\ = 1-\frac{1}{D}$$
+
+$$D = \frac{1}{1-G}$$
+
+Step 2: sub in definition of G
+
+$$D = \frac{1}{1-(1-S)}$$
+
+$$D = \frac{1}{S}$$
+
+Step 3: sub in S
+
+$$D = \frac{1}{\sum_{i=1}^{n}p^2_i}$$
+
+In terms of $D$, these two metrics are identical. 
+
+**c)**
+
+Part 1: sub in $1/D$
+
+$$H=-\sum_{i=1}^{n}p_iln(p_i)$$
+
+$$H=-\sum_{i=1}^{D}(\frac{1}{D})ln(\frac{1}{D})$$
+
+Part 2: cancel
+
+$$H=-D(\frac{1}{D})ln(\frac{1}{D})$$
+
+$$H=ln(D)$$
+
+$$D=e^H$$
+
+Step 3: sub $H$ back in
+
+ $$D=e^{-\sum_{i=1}^{n}p_iln(p_i)}$$
+
+**d)**
+
+Step 1: sub in $1/D$
+
+$$H_q^{(R)}=\frac{1}{q-1}(-ln\sum_{i=1}^{n}p_i^q)$$
+
+$$H_q^{(R)}=\frac{1}{q-1}(-ln\sum_{i=1}^{D}(\frac{1}{D})^q)$$
+
+$$H_q^{(R)}=\frac{1}{q-1}(-lnD(\frac{1}{D})^q)$$
+
+Step 2: simplify 
+
+$$H_q^{(R)}=\frac{1}{q-1}(-lnD^{(1-q)})$$
+
+$$H_q^{(R)}=\frac{1}{q-1}(lnD^{(q-1)})$$
+
+Step 3: Multiply both sides by $q-1$ and simplify
+
+$$H_q^{(R)}(q-1)=lnD(q-1)$$
+
+$$H_q^{(R)}=lnD$$
+
+$$D=e^{H_q^{(R)}}$$
+
+Step 4: plug in $H_q^{(R)}$
+
+$$D=e^{\frac{1}{q-1}(-ln\sum_{i=1}^{n}p_i^q)}$$
+
+
+
+**e)**
+
+Step 1: plug in $1/D$ and simplify 
+
+$$H_q^{(T)}=\frac{1}{q-1}(1-\sum_{i=1}^{n}p_i^q)$$
+
+$$H_q^{(T)}=\frac{1}{q-1}(1-\sum_{i=1}^{D}(\frac{1}{D})^q)$$
+
+$$H_q^{(T)}=\frac{1}{q-1}(1-D(\frac{1}{D})^q)$$
+
+$$H_q^{(T)}=\frac{1}{q-1}(1-D^{(1-q)})$$
+
+Step 2: rearrange and simplify 
+
+$$D=((1-(q-1))H_q^{(T)})^{\frac{1}{{(1-q)}}}$$
+
+Step 3: sub in $H_q^{(T)}$
+
+$$D=((2-q)(\frac{1}{q-1}(1-\sum_{i=1}^{n}p_i^q)))^{\frac{1}{{(1-q)}}}$$
+
+Both of these depend on Shannon's E
+
+**f)**
+
+
+
+$$\lim_{n\to\infty} (1+\frac{H_q^{(T)}}{n})^n=e^{H_q^{(T)}}$$
+
+$$\lim_{q\to1} (1+\frac{H_q^{(T)}}{\frac{1}{1-q}})^{\frac{1}{1-q}}=e^{H_q^{(T)}}$$
+
+$$D=((1-(q-1))H_q^{(T)})^{\frac{1}{{(1-q)}}}$$
+
+$$D=1+(\frac{H_q^{(T)}}{\frac{1}{1-q}})^{\frac{1}{1-q}}$$
+
+$$\lim_{q\to1} = 1+(\frac{H_q^{(T)}}{\frac{1}{1-q}})^{\frac{1}{1-q}}=D$$
+
+$$D=e^{H_q^{(T)}}$$
+
+This matches shannon's entropy $D=e^H$
+
+
+
+**Problem 2:**
+Step 1: Set up equation and sub in
+
+$$\Psi=F+\lambda G$$
+
+$$\Psi=\frac{C}{H}+\lambda G$$
+
+$$=\frac{\sum_{i=1}^{n}p_i ln(j+a)}{-g\sum_{i=1}^{n}p_i ln p_i}+\lambda\sum_{i=1}^{n}p_i-1$$
+
+Step 2: take partial derivative 
+
+$$\frac{\partial \Psi}{\partial p_j}=\frac{ln(j+a)H + Cg(Hlnp_i))}{H^2}+\lambda=0$$
+
+$$\frac{\partial \Psi}{\partial p_j}=\frac{ln(j+a)(-g\sum_{i=1}^{n}p_i ln p_i)-(\sum_{i=1}^{n}p_ih(j+a)(-g(Hlnp_i))}{(-g\sum_{i=1}^{n}p_i ln p_i)^2}+\lambda$$
+
+Step 3: simplify and rearrange
+
+$$-\lambda H^2=Hln(j+a)+Cg(Hlnp_i)$$
+
+$$p_i=e^{\frac{-\lambda H^2-Hln(j+a)-Cg}{Cg}}$$
+
+$$p_i=e^{-\lambda H^2/Cg}(j+a)^{-H/Cg}$$
+
+Step 4: Find expression connecting all variables while also showing that $e^{-\lambda H^2/Cg}=1$
+
+$$p_i=e^{-1-\frac{\lambda H^2}{Cg}(a+j)^{\frac{-H}{Cg}}}$$
+
+take the natural log:
+
+$$lnp_i={-1-\frac{\lambda H^2}{Cg}+{\frac{-H}{Cg}}ln(a+j)}$$
+
+$$H=-g\sum_{i=1}^{n}p_iln(p_i)$$
+
+$$H=-g\sum_{i=1}^{n}p_i\Bigg[\Big(-1-\frac{\lambda H^2}{Cg}\Big)+\Big(\frac{-H}{Cg}\Big)ln(a+j)  \Bigg]$$
+
+$$H=g\Bigg[\sum_{i=1}^{n}p_i\Big(\frac{1+\lambda H^2}{Cg}\Big)+\frac{H}{C}\sum_{i=1}^{n}p_iln(a+j)  \Bigg]$$
+
+$\sum_{i=1}^{n}p_i$ goes to 1 and $\sum_{i=1}^{n}p_iln(a+j)$ is C
+
+$$H=g+\frac{\lambda H^2}{C}+H$$
+
+$$0=g+\frac{\lambda H^2}{C}$$
+
+$$-g=\frac{\lambda H^2}{C}$$
+
+Find expression connecting all variables….
+
+$$\lambda=\frac{-gC}{H^2}$$
+
+Step 5: plug $\lambda=\frac{-gC}{H^2}$ into $p_i=e^{-1-\frac{\lambda H^2}{Cg}(a+j)^{\frac{-H}{Cg}}}$
+
+$$p_i=e^0(a+j)^{\frac{-H}{Cg}}$$
+
+$$p_i=(a+j)^{\frac{-H}{Cg}}$$
+**Problem 3:**
+
+**A)**
+
+Use this expression for large N for various alphas between 1 and 2. Iterate through the summation:
+$$\sum_{j=1}^{N}(j+1)^{-\alpha}-1=0$$
+
+
+
+```{r, echo=FALSE, message=FALSE}
+# Problem 3
+
+# a)
+
+# create j
+N <- 1000
+
+
+# sequnce of alpha
+alpha <- seq(1,2,length.out=1000)
+fa <- matrix(nrow=N, ncol=length(alpha))
+
+# function of a
+for(a in 1:length(alpha)){
+  for(j in 1:N){
+  
+    fa[j, a] <- ((j+1)^(-alpha[a]))
+
+}
+}
+
+y <- colSums(fa)-1
+
+plot(x=alpha, y=y,  ylab = "function(alpha)", xlab="alpha", main = "alpha by function of alpha to determine alpha")
+abline(h=0, col = "red")
+text(x=1.8, y=5, "alpha = 1.723724")
+
+df <- data.frame(alpha, y)
+
+```
+
+
+**B)**
+
+$$\sum_{i=1}^{n}(j+a)^{-1}=1$$
+
+$$\sum_{i=1}^{n}\frac{1}{i+a}=1$$
+
+approximation:
+
+$$\int_{1}^{n} \frac{1}{x+a}dx=1$$ 
+
+antiderivative: 
+
+$$ln(a+x)|^{n}_{1}=1$$
+
+$$ln(a+n)-ln(a+1)=1$$
+
+$$\frac{a+n}{a+1}=e$$
+
+$$a=\frac{e-n}{1-e}$$
+
+as n goes to infinity, a goes to positive infinity 
+
+
+
+**Problem 4 (A, B):**
+
+```{r, echo=FALSE, message=FALSE}
+setwd("~/Documents/GitHub/BurnhamPoCS/assignment3")
+
+
+# Read in Data:
+wordsFreq <- read.table("google_vocab_rawwordfreqs.txt", 
+                        header=TRUE, 
+                        sep = " ", 
+                        stringsAsFactors = FALSE)
+
+
+
+# Problem 4
+
+# a)
+k <- c(1:199)
+N_k <- 3.46 * (10^8)*k^(-0.661)
+plot(y=log10(N_k), log10(k), ylab="log10(N_k)", xlab = "log10(k)", main = "Extrapolated google word plot (k=1-199)")
+
+# b)
+
+fullset <- c(N_k, wordsFreq$X95119665584)
+
+paste("The mean is:", mean(fullset, na.rm=T)) # mean
+paste("The variance is:", (sd(fullset))^2) # varaince
+
+
+```
+
+
+**C)**
+
+$$i =\frac{N_1}{\sum k * N_k (total)}$$
+
+$$ii =\frac{\sum N_k (extrapolated)}{\sum N_k (total)}$$
+
+$$iii =\frac{\sum N_k * k (extrapolated)}{\sum k * N_k (total)}$$
+
+
+```{r, echo=FALSE, message=FALSE}
+
+
+# c)
+# i sum(nk * k)
+Denom <- sum(c(1:length(fullset))*fullset)
+
+paste("The answer to C part i is:", N_k[1]/Denom)
+
+# ii
+
+paste("The answer to C part ii is:", sum(N_k)/sum(fullset))
+
+# iii
+
+paste("The answer to C part iii is:", sum(N_k*k)/Denom)
+
+```
+
+
