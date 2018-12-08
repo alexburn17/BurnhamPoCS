@@ -1,22 +1,55 @@
+
+
+
+
+
+
+
 library(igraph)
 library(raster)
 
+
+
 # params
-p <- seq(0, 1, length.out = 100)
+p <- .2
 N <- 100
+L <- 20
+
+
+
+# random data (1=tree or 0=sheep)
+dat <- sample(0:1, L*L, replace=T, prob = c((1-p), p))
+mat <- matrix(nrow = L, ncol = L, data = dat)
+
+
+Rmat <- raster(mat)
+Clumps <- as.matrix(clump(Rmat, directions=4))
+
+length(Clumps[!is.na(Clumps)])
+max(table(Clumps))
+
+
+#turn the clumps into a list
+tot <- max(Clumps, na.rm=TRUE)
+res <- vector("list",tot)
+for (i in 1:max(Clumps, na.rm=TRUE)){
+  res[i] <- list(which(Clumps == i, arr.ind = TRUE))
+}
+
+
+
+image(mat, asp=1, xaxt='n', yaxt='n', col = c("black", "grey"), ann=FALSE, bty='n')
+legend(x=-.35, y=1, legend=c("Tree", "Sheep"), col = c("black", "grey"), pch=15, cex=1)
+
+
+
 
 # BEGIN FUNCTION ########################################################
 forest <- function(N=N, p=p, L=L, frac=frac){
   for(j in 1:N){
     for(i in 1:length(p)){
 
-      # random data (1=tree or 0=sheep)
-      dat <- sample(0:1, L*L, replace=T, prob = c(p[i], (1-p[i])))
-      mat <- matrix(nrow = L, ncol = L, data = dat)
 
-      # calculate fraction 
-      Rmat <- raster(mat)
-      frac[i,j] <- (max(as.matrix(clump(Rmat, directions=4)), na.rm=T))/L^2
     }
   }
   return(frac)
@@ -89,6 +122,3 @@ abline(v=0.717172)
 text("p_c = 0.717172", x=0.87, y=.19)
 
 
-
-#image(mat, asp=1, xaxt='n', yaxt='n', col = c("black", "grey"), ann=FALSE, bty='n')
-#legend(x=-.35, y=1, legend=c("Tree", "Sheep"), col = c("black", "grey"), pch=15, cex=1)

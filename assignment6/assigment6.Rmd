@@ -1,5 +1,5 @@
 ---
-title: "PoCS Assignment 5"
+title: "PoCS Assignment 6"
 author: "P. Alexander Burnham"
 date: "October 8, 2018"
 output: pdf_document
@@ -14,8 +14,77 @@ Worked with: Yu Han, Edison & Kewang
 
 **a)**
 
+Step 1: set up problem
+
+$$p^2(1-p) = 1,1,1,0 \:and \: (l=3)$$
+
+$$(1-p)p(1-p)p^2(1-p)p^3(1-p)…p^n(1-p)$$
+
+
+
+Step 2: factor out $(1-p)$
+
+$$(1-p)(p+p^2+p^3…p^n)=1$$
+
+this is infinite series...
+
+$$(1-p)\Big(\frac{1}{1-p}\Big)=1$$
+
+simplify:
+
+$$p(l)=p^{(l-1)}(1-p)$$
+
+
+
+**b)**
+
+
+Step 1: set up problem
+
+$$E=(1-p)[(1+2)(p+3)(p^2+4)...]$$
+
+
+
+Step 2: multiply by p
+
+$$PE=(1-p)[(p+2p^2+3p^3...]$$
+
+
+
+Step 3: factor out $(1-p)$ to show infinite series
+
+$$(1-p)E=(1-p)[(p+p^2+p^3…p^n)]$$
+
+simplify...
+
+$$E=\Big(\frac{1}{1-p}\Big)$$
+
+As p goes to 1, E goes to infinity making p=1 the giant component.
+
+
+
 
 **Problem 2:**
+
+$p'$ is the probability that there is percolation in a single triangle
+
+There are three cases where two nodes in the triangle are trees
+
+There is one case where all nodes are trees
+
+In notation….
+
+$$p'=3p^2(1-p)+p^3$$
+
+$p$ becomes $p_c$
+
+and simplify 
+
+$$p_c=3p_c^2-2p_c^3$$
+
+
+
+
 
 **Problem 3:**
 
@@ -30,7 +99,7 @@ Worked with: Yu Han, Edison & Kewang
 
 # params
 p <- seq(0, 1, length.out = 100)
-N <- 100
+N <- 50
 
 # BEGIN FUNCTION ########################################################
 forest <- function(N=N, p=p, L=L, frac=frac){
@@ -38,12 +107,13 @@ forest <- function(N=N, p=p, L=L, frac=frac){
     for(i in 1:length(p)){
 
       # random data (1=tree or 0=sheep)
-      dat <- sample(0:1, L*L, replace=T, prob = c(p[i], (1-p[i])))
+      dat <- sample(0:1, L*L, replace=T, prob = c((1-p[i]), p[i]))
       mat <- matrix(nrow = L, ncol = L, data = dat)
 
       # calculate fraction 
       Rmat <- raster(mat)
-      frac[i,j] <- (max(as.matrix(clump(Rmat, directions=4)), na.rm=T))/L^2
+      Clumps <- as.matrix(clump(Rmat, directions=4))
+      frac[i,j] <- max(table(Clumps))/L^2
     }
   }
   return(frac)
@@ -60,6 +130,9 @@ forest <- function(N=N, p=p, L=L, frac=frac){
 #v20 <- forest(N=N, p=p, L=20, frac=frac)
 # creat vecotr of means
 #v20vec <- rowMeans(v20, na.rm=T)
+
+
+
 
 
 #### L=50
@@ -102,33 +175,109 @@ colors <- c("green", "red", "blue", "black")
 
 matplot(y=problem3DF[,2:5], x=p, type = "l", xlab = "p",
         ylab = "S_avg", lwd=3, 
-        col=colors, ylim = c(0, .2), 
+        col=colors, ylim = c(0, 1), 
         lty=1, cex.lab = 1.3, 
         main="S_avg as a function of p for varying L")
 
 grid()
 
-legend(0.01, 0.2, 
+legend(0.01, 1, 
        legend=c("L=20", "L=50", "L=100" ,"L=200"), 
        col=colors, lty=1, cex=.8)
-abline(h=0.130231)
-abline(v=0.717172)
-text("p_c = 0.717172", x=0.87, y=.19)
+abline(v=0.6)
+text("p_c = 0.6", x=0.4, y=.93)
 
 
 
-#image(mat, asp=1, xaxt='n', yaxt='n', col = c("black", "grey"), ann=FALSE, bty='n')
-#legend(x=-.35, y=1, legend=c("Tree", "Sheep"), col = c("black", "grey"), pch=15, cex=1)
+
 
 ```
 
 **b)**
 
-As L increases, the accuracy (lack of stochasticity or variance) increases. The curve tends to smooth out and the values for S_avg_ tend to be lower. The estimate for p_c_ is 0.7172 which is the maximum point on the most accurate curve (L=200).
+As L increases, the accuracy (lack of stochasticity or variance) increases. The curve tends to smooth out. The estimate for p_c_ is 0.59 which is the inflection point on the most accurate curve (L=200).
 
 
 
 **Problem 4:**
+
+
+**a)**
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(igraph)
+library(raster)
+
+p <- 0.6
+L <- 10
+N <- 1000
+
+x <- function(p=p, L=L){
+# random data (1=tree or 0=sheep)
+      dat <- sample(0:1, L*L, replace=T, prob = c((1-p), p))
+      mat <- matrix(nrow = L, ncol = L, data = dat)
+
+      # calculate fraction 
+      Rmat <- raster(mat)
+      Clumps <- as.matrix(clump(Rmat, directions=4))
+      frac <- max(table(Clumps))/L^2
+      return(frac)
+}
+
+vec <- vector()
+
+for(i in 1:N){
+  
+  vec[i] <- x(p=p, L=L)
+
+}
+
+hist(vec, xlab = "p", main="p = p_c", col="green")
+
+```
+
+In the case of p=p_c_, the distribution looks to be fairly normal with an N of 1000
+
+**b)**
+
+
+
+```{r, echo=FALSE, message=FALSE}
+par(mfrow=c(1,2))
+
+p <- 0.6/2
+
+vec <- vector()
+
+for(i in 1:N){
+  
+  vec[i] <- x(p=p, L=L)
+
+}
+
+hist(vec, xlab = "p", main="p = p_c/2", col="red")
+
+
+
+p <- 0.6 + (1 - 0.6)/2
+
+
+vec <- vector()
+
+for(i in 1:N){
+  
+  vec[i] <- x(p=p, L=L)
+
+}
+
+hist(vec, xlab = "p", main="p = p_c + (1 - p_c)/2", col="blue")
+
+par(mfrow=c(1,1))
+```
+
+For p_c_/2 (well below), the distribution is skewed right with a small range of values (p=0.05-0.25). For p_c_ + (1 - p_c_)/2 (well above), the distribution is skewed left and values have alarger range and the higher frequency area is on larger values of p.
 
 
 **Problem 5:**
@@ -141,32 +290,34 @@ As L increases, the accuracy (lack of stochasticity or variance) increases. The 
 
 ```{r, echo=FALSE, message=FALSE}
 
-library("poweRlaw")
+#library("poweRlaw")
 
 N=c(1, 10^2, 10^3, 10^4, 10^5, 10^6) 
 k=(1:1000)
 
 
-mat <- matrix(nrow = 1000, ncol = 6)
+#mat <- matrix(nrow = 1000, ncol = 6)
 
-for(n in 1:6){
-  for(i in 1:1000){
-    mat[i, n] <- max(rpldis(n=N[n], xmin=1, alpha=3/2, discrete_max = 1000))
-}
-}
+#for(n in 1:6){
+#  for(i in 1:1000){
+#    mat[i, n] <- max(rpldis(n=N[n], xmin=1, alpha=3/2, discrete_max = 1000))
+#}
+#}
 
 
-matDat <- as.data.frame(mat)
-CD.sorted <- apply(matDat, 2, sort, decreasing=T)
+#matDat <- as.data.frame(mat)
+#CD.sorted <- apply(matDat, 2, sort, decreasing=T)
 
-setwd("~/Documents/GitHub/BurnhamPoCS/assignment4")
+setwd("~/Documents/GitHub/BurnhamPoCS/assignment6")
+#write.csv(CD.sorted, "NKsorted6.csv")
 
 # Read in Data:
-mat <- read.csv("NKsorted.csv", 
+mat <- read.csv("NKsorted6.csv", 
                 header=TRUE, 
                 stringsAsFactors = FALSE)
 
 mat2 <- as.matrix(mat)
+mat2 <- mat[,2:7]
 
 matplot(log10(mat2), type="o", cex=.2, main="K_max by N", xlab = "Rank", ylab="log10(k_max)", col=c(1:6))
 legend("topright", inset=0.01, legend=c("10^1","10^2","10^3","10^4","10^5","10^6"), col=c(1:6), pch=15)
@@ -186,18 +337,19 @@ kmeanEst <- colMeans(mat2)
 mod5 <- lm(log10(kmeanEst)~log10(N)) 
 plot(y=log10(kmeanEst), x=log10(N), main="K_max estimate by N", xlab = "log10(N)", ylab = "log10((k_max))")
 abline(mod5, col="blue")
-text(x=2,y=4, "slope = 0.6262")
+text(x=2,y=14, "slope = 2.08")
 
 gamma <- 3/2
 
 kmeanTher <- ((gamma-1)/(gamma-2))*N^((2-gamma)/(gamma-1))
+kmeanTher <- kmeanTher*-1
 
-mod6 <- lm(log10(kmeanTher)~log10(N)) 
-plot(y=log10(kmeanTher), x=log10(N), main="K_max theoretical by N", xlab = "log10(N)", ylab = "log10((k_max))")
+mod6 <- lm((-1*log10(kmeanTher))~log10(N)) 
+plot(y=(-1*log10(kmeanTher)), x=log10(N), main="K_max theoretical by N", xlab = "log10(N)", ylab = "log10((k_max))")
 abline(mod6, col="red")
-text(x=3,y=.3, "slope = -0.3333")
+text(x=3,y=-1, "slope = -1")
 par(mfrow=c(1,1))
 ```
 
-My theoretical value and empirical values do no match up. The one I calculated by sampling a powerlaw distribution has a positive slope of around 0.6. This makes sense as the max k should increase as the sample size increases. However, my derivation of the theoretical max k has a negative slope of -0.3. This does no make sense and leads me to believe that my model is correct and the theoretical values are incorrect. $K_max$ should increase as N increases as this increase in N gives higher probability of capturing a large $K$. The theretical value looks like it is flipped about the y axis as the spacing of the points is simaler.
+Based on a theoretical k_mean estimation of kmeanTher = ((gamma-1)/(gamma-2))*N^((2-gamma)/(gamma-1)), my theoretical value and empirical values do no match up. The slope of the theoretical value is half that of the estimate and negative. The one I calculated by sampling a powerlaw distribution has a positive slope of around 2. This makes sense as the max k should increase as the sample size increases. However, my derivation of the theoretical max k has a negative slope of -1 This does not make sense and leads me to believe that my model is correct and the theoretical values are incorrect. $K_max$ should increase as N increases as this increase in N gives higher probability of capturing a large $K$. The theretical value looks like it is flipped about the y axis as the spacing of the points is simaler. However, te change from 5/2 t0 3/2 makes sense as the lower scaling exponant should allow for larger values to be selected more frequently driving the m_max values up.
 
